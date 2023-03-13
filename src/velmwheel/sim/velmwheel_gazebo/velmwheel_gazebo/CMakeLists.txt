@@ -3,7 +3,7 @@
 # @author     Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
 # @maintainer Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
 # @date       Tuesday, 1st March 2022 4:30:53 pm
-# @modified   Wednesday, 25th May 2022 4:44:01 pm
+# @modified   Sunday, 12th March 2023 3:07:39 pm
 # @project    engineering-thesis
 # @brief      CMake file for `velmwheel_gazebo` package
 #    
@@ -239,6 +239,40 @@ add_ament_library(
         tf2_ros
         velmwheel_model
         velmwheel_gazebo_msgs
+    
+    # Set common options
+    ${COMMON_OPTIONS}
+    
+)
+
+# ===================================================== Contact plugin ===================================================== #
+
+# Add robot's auxiliary plugin 
+add_ament_library(
+
+    # Library name
+    LIBRARY_NAME contact_gazebo
+
+    # Library sources
+    SOURCES
+        src/contact_gazebo.cpp
+
+    # Includes
+    OVERRIDE_INCLUDES
+        PRIVATE
+            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+
+    # Dependencies
+    AMENT_DEPENDENCIES 
+        # rclcpp
+        # node_common_cpp
+        # geometry_msgs
+        gazebo_ros
+        # tf2
+        # tf2_ros
+        # velmwheel_model
+        # velmwheel_gazebo_msgs
     
     # Set common options
     ${COMMON_OPTIONS}

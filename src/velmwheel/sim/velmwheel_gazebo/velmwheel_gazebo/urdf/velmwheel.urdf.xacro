@@ -4,7 +4,7 @@
   - @author     Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
   - @maintainer Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
   - @date       Wednesday, 9th March 2022 7:42:42 pm
-  - @modified   Wednesday, 25th May 2022 11:44:59 pm
+  - @modified   Monday, 13th March 2023 8:08:16 am
   - @project    engineering-thesis
   - @brief      Definition of the Gazebo plugins for URDF model of the WUT Velmwheel robot
   -    
@@ -100,6 +100,12 @@
                 </script>
             </material>
         </visual>
+        <sensor name='base_contact_sensor' type='contact'>
+            <plugin name="contact_plugin" filename="libcontact_gazebo.so"/>
+            <contact>
+                <collision>base_link_fixed_joint_lump__base_collision</collision>
+            </contact>
+        </sensor>
     </gazebo>
 
     <!-- Mobile front -->
