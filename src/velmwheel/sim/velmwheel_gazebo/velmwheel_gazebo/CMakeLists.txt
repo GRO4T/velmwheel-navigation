@@ -3,7 +3,7 @@
 # @author     Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
 # @maintainer Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
 # @date       Tuesday, 1st March 2022 4:30:53 pm
-# @modified   Sunday, 12th March 2023 3:07:39 pm
+# @modified   Tuesday, 14th March 2023 8:42:59 pm
 # @project    engineering-thesis
 # @brief      CMake file for `velmwheel_gazebo` package
 #    
@@ -265,14 +265,10 @@ add_ament_library(
 
     # Dependencies
     AMENT_DEPENDENCIES 
-        # rclcpp
-        # node_common_cpp
-        # geometry_msgs
+        rclcpp
+        node_common_cpp
         gazebo_ros
-        # tf2
-        # tf2_ros
-        # velmwheel_model
-        # velmwheel_gazebo_msgs
+        velmwheel_gazebo_msgs
     
     # Set common options
     ${COMMON_OPTIONS}

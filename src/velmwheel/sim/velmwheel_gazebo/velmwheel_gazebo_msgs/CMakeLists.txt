@@ -3,7 +3,7 @@
 # @author     Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
 # @maintainer Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
 # @date       Tuesday, 1st March 2022 4:30:53 pm
-# @modified   Wednesday, 25th May 2022 11:16:52 pm
+# @modified   Tuesday, 14th March 2023 7:02:04 pm
 # @project    engineering-thesis
 # @brief      CMake file for `velmwheel_gazebo_msgs` package
 # 
@@ -31,6 +31,9 @@ find_package(geometry_msgs REQUIRED)
 
 # Add interfaces to the project
 rosidl_generate_interfaces(${PROJECT_NAME}
+
+    # Messages
+    "msg/ContactState.msg"
 
     # Services
     "srv/FrictionConfig.srv"
