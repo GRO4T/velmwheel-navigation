@@ -3,7 +3,7 @@
  * @author     Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
  * @maintainer Krzysztof Pierczyk (krzysztof.pierczyk@gmail.com)
  * @date       Monday, 7th March 2022 5:15:43 pm
- * @modified   Tuesday, 14th March 2023 7:06:56 pm
+ * @modified   Monday, 30th May 2022 11:38:57 pm
  * @project    engineering-thesis
  * @brief      Implementation of the IMU sensor's Gazebo plugin for WUT Velmobil robot
  * 
