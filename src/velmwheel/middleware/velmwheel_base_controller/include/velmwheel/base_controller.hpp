@@ -84,6 +84,8 @@ public: /* ------------------------------------------------ Topic's parameters -
     static constexpr auto ODOM_PUB_TOPIC_NAME = "odom/encoders";
     /// Name of the topic published by the node to broadcast basic odometry data as a pose
     static constexpr auto ODOM_POSE_PUB_TOPIC_NAME = "odom/encoders/pose";
+    /// Name of the topic to set new odometry position.
+    static constexpr auto ODOM_SET_POSE_TOPIC_NAME = "odom/encoders/set_pose";
 
     /// Name of the TF reference frame for odometry data
     static constexpr auto ODOM_FRAME = "odom";
@@ -129,6 +131,9 @@ private: /* ------------------------------------------------ Callback methods --
      * @brief Callback method called at arrival of the new velocity setpoint for the robot
      */
     void velocity_setpoint_callback(const geometry_msgs::msg::Twist &msg);
+
+    // TODO: add comment
+    void set_pose_callback(const geometry_msgs::msg::Pose& msg);
 
     /**
      * @brief Callback method called periodically to compute current control signalsd
@@ -188,6 +193,8 @@ private: /* ------------------------------------------------- ROS interfaces ---
 	rclcpp::Subscription<velmwheel_msgs::msg::EncodersStamped>::SharedPtr encoders_sub;
 	/// Subscriber interface used to acquire current velocity sepoint for the robot
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr velocity_setpoint_sub;
+    /// Subscriber interface used to set new odometry position.
+    rclcpp::Subscription<geometry_msgs::msg::Pose>::SharedPtr encoders_set_pose_sub;
 
 	/// Publisher interface used to provide controls for robot's wheels
 	rclcpp::Publisher<velmwheel_msgs::msg::Wheels>::SharedPtr controls_pub;

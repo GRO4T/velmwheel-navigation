@@ -45,7 +45,14 @@ BaseController::BaseController(const rclcpp::NodeOptions & options) :
         .name(VELOCITY_SETPOINT_SUB_TOPIC_NAME)
         .qos(TOPIC_QUEUE_SIZE)
         .callback(*this, &BaseController::velocity_setpoint_callback);
-    
+
+    // TODO: add comment
+    *node_common::communication::make_subscriber_builder(encoders_set_pose_sub)
+            .node(*this)
+            .name(ODOM_SET_POSE_TOPIC_NAME)
+            .qos(TOPIC_QUEUE_SIZE)
+            .callback(*this, &BaseController::set_pose_callback);
+
     /* ----------------------------- Initialize publishers --------------------------- */
 
     // Initialize publisher for the topic broadcasting controls for robot's wheels
@@ -177,10 +184,31 @@ void BaseController::velocity_setpoint_callback(const geometry_msgs::msg::Twist 
     controls_pub->publish(velmwheel::math::twist_to_wheels(msg));
 }
 
+void BaseController::set_pose_callback(const geometry_msgs::msg::Pose& msg) {
+    RCLCPP_ERROR_STREAM(this->get_logger(), "Reset encoders odometry requested");
+
+    /* ------------------------- Calculate current odometry -------------------------- */
+
+    geometry_msgs::msg::Pose pose;
+
+    // Compute current orientation
+    pose.orientation = tf2::toMsg(tf2::Quaternion(tf2::Vector3{0, 0, 1}, 0.0));
+    // Compute current position
+    pose.position.x = msg.position.x;
+    pose.position.y = msg.position.y;
+    pose.position.z = msg.position.z;
+
+    /* --------------- Keep odom informations for the next iteration ----------------- */
+
+    // Update odometry info
+    odom_keepup->previous_position = pose.position;
+    odom_keepup->previous_z_angle  = 0.0;
+}
+
 /* ============================================================ Helpers =========================================================== */
 
 geometry_msgs::msg::Pose BaseController::initialize_odom(const velmwheel_msgs::msg::Wheels &current_angles) {    
-    
+
     odom_keepup.emplace();
 
     /* ------------------------- Calculate current odometry -------------------------- */
