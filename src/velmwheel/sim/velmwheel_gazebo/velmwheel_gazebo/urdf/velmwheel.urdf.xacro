@@ -54,6 +54,12 @@
 					</friction>
 				</surface>
 			</collision>
+            <sensor name='${dir}_${side}_wheel_contact_sensor' type='contact'>
+                <plugin name="${dir}_${side}_contact_plugin" filename="libcontact_gazebo.so"/>
+                <contact>
+                    <collision>wheel_${dir}${side}_collision</collision>
+                </contact>
+            </sensor>
         </gazebo>
 
         <gazebo reference="wheel_${dir}${side}_rollers">
