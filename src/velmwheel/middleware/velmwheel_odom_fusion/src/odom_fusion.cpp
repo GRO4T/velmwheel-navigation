@@ -237,7 +237,7 @@ void OdomFusion::velocity_setpoint_callback(const geometry_msgs::msg::Twist &msg
 
 
 void OdomFusion::odom_callback(const nav_msgs::msg::Odometry &msg) {
-
+    return;
     // Get current time
     auto now = this->get_clock()->now();
 
