@@ -53,41 +53,16 @@ void ContactPlugin::Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf) {
 void ContactPlugin::OnUpdate() {
   msgs::Contacts contacts = this->sensor->Contacts();
   for (unsigned int i = 0; i < contacts.contact_size(); ++i) {
-    const auto& contact = contacts.contact(i);
+    const auto &contact = contacts.contact(i);
 
-    RCLCPP_DEBUG_STREAM(
-        node->get_logger(),
-        "Collision between[" << contact.collision1()
-            << "] and [" << contact.collision2() << "]\n"
-    );
-
-    for (unsigned int j = 0; j < contact.position_size(); ++j)
-    {
-        RCLCPP_DEBUG_STREAM(
-            node->get_logger(),
-            j << "  Position:"
-                << contact.position(j).x() << " "
-                << contact.position(j).y() << " "
-                << contact.position(j).z() << "\n"
-        );
-        RCLCPP_DEBUG_STREAM(
-            node->get_logger(),
-            "   Normal:"
-                << contact.normal(j).x() << " "
-                << contact.normal(j).y() << " "
-                << contact.normal(j).z() << "\n";
-        );
-        RCLCPP_DEBUG_STREAM(
-            node->get_logger(),
-            "   Depth:" << contact.depth(j) << "\n"
-        );
+    if (contact.collision1() != "ground_plane::link::collision" &&
+        contact.collision2() != "ground_plane::link::collision") {
+      velmwheel_gazebo_msgs::msg::ContactState msg;
+      msg.info = "Velmwheel robot collision";
+      msg.collision1_name = contact.collision1();
+      msg.collision2_name = contact.collision2();
+      pub->publish(msg);
     }
-
-    velmwheel_gazebo_msgs::msg::ContactState msg;
-    msg.info = "Velmwheel robot collision";
-    msg.collision1_name = contact.collision1();
-    msg.collision2_name = contact.collision2();
-    pub->publish(msg);
   }
 }
 
