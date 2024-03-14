@@ -185,7 +185,7 @@ local_costmap:
   local_costmap:
     ros__parameters:
       update_frequency: 8.0
-      publish_frequency: 4.0
+      publish_frequency: 0.0
       global_frame: odom
       robot_base_frame: base_link
       use_sim_time: True
@@ -212,7 +212,7 @@ local_costmap:
           max_obstacle_height: 2.0
           min_obstacle_height: 0.0
           clearing: False
-          marking: True
+          marking: False
           expected_update_rate: 0.5
           data_type: "LaserScan"
           inf_is_valid: false
@@ -233,7 +233,7 @@ global_costmap:
   global_costmap:
     ros__parameters:
       update_frequency: 8.0
-      publish_frequency: 4.0
+      publish_frequency: 0.01
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: True
@@ -250,7 +250,7 @@ global_costmap:
           # data_type: "PointCloud2"
           max_obstacle_height: 2.0
           clearing: True
-          marking: True
+          marking: False
           expected_update_rate: 0.5
           data_type: "LaserScan"
           raytrace_max_range: 3.0
@@ -307,8 +307,8 @@ planner_server_rclcpp_node:
 
 recoveries_server:
   ros__parameters:
-    costmap_topic: local_costmap/costmap_raw
-    footprint_topic: local_costmap/published_footprint
+    costmap_topic: global_costmap/costmap_raw
+    footprint_topic: global_costmap/published_footprint
     cycle_frequency: 10.0
     recovery_plugins: ["backup", "spin", "wait"]
     spin:
